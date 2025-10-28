@@ -8,7 +8,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { QuotesService } from './quotes.service';
-import type { Quote } from 'src/interface/Quote';
+import { Quote } from './entity/quote.entity';
 
 @Controller('quotes')
 export class QuotesController {
