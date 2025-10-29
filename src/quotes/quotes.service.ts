@@ -2,6 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Quote } from './entity/quote.entity';
 import { Repository } from 'typeorm';
+import { CreateQuoteDto } from './dto/create-quote.dto';
+import { UpdateQuoteDto } from './dto/update-quote.dto';
 
 @Injectable()
 export class QuotesService {
@@ -31,14 +33,14 @@ export class QuotesService {
     return quotes[randomIndex];
   }
 
-  async create(quote: Omit<Quote, 'id'>): Promise<Quote> {
-    const newQuote = this.quoteRepository.create(quote);
+  async create(createQuoteDto: CreateQuoteDto): Promise<Quote> {
+    const newQuote = this.quoteRepository.create(createQuoteDto);
     return this.quoteRepository.save(newQuote);
   }
 
-  async update(id: number, updatedQuote: Partial<Quote>): Promise<Quote> {
+  async update(id: number, updateQuoteDto: UpdateQuoteDto): Promise<Quote> {
     const quote = await this.getOneQuote(id);
-    const updated = { ...quote, ...updatedQuote };
+    const updated = { ...quote, updateQuoteDto };
     return this.quoteRepository.save(updated);
   }
 

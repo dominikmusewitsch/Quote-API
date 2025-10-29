@@ -9,6 +9,8 @@ import {
 } from '@nestjs/common';
 import { QuotesService } from './quotes.service';
 import { Quote } from './entity/quote.entity';
+import { CreateQuoteDto } from './dto/create-quote.dto';
+import { UpdateQuoteDto } from './dto/update-quote.dto';
 
 @Controller('quotes')
 export class QuotesController {
@@ -30,13 +32,16 @@ export class QuotesController {
   }
 
   @Post()
-  async create(@Body() quote: Omit<Quote, 'id'>) {
-    return this.quotesService.create(quote);
+  async create(@Body() createQuoteDto: CreateQuoteDto) {
+    return this.quotesService.create(createQuoteDto);
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() quoteUpdate: Partial<Quote>) {
-    return this.quotesService.update(+id, quoteUpdate);
+  async update(
+    @Param('id') id: string,
+    @Body() updateQuoteDto: UpdateQuoteDto,
+  ) {
+    return this.quotesService.update(+id, updateQuoteDto);
   }
 
   @Delete(':id')
