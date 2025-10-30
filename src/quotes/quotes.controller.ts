@@ -11,21 +11,25 @@ import { QuotesService } from './quotes.service';
 import { Quote } from './entity/quote.entity';
 import { CreateQuoteDto } from './dto/create-quote.dto';
 import { UpdateQuoteDto } from './dto/update-quote.dto';
+import { Public } from 'src/common/decorators/public.decorator';
 
 @Controller('quotes')
 export class QuotesController {
   constructor(private readonly quotesService: QuotesService) {}
 
   @Get()
+  @Public()
   async getAllQuotes(): Promise<Quote[]> {
     return this.quotesService.getAllQuotes();
   }
 
+  @Public()
   @Get('random')
   async getRandomQuote(): Promise<Quote> {
     return this.quotesService.getRandomQuote();
   }
 
+  @Public()
   @Get(':id')
   async getOneQuote(@Param('id') id: string): Promise<Quote> {
     return this.quotesService.getOneQuote(+id);
